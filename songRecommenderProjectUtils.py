@@ -167,6 +167,7 @@ def run_recommender():
             allowtransparency="true",
             allow="encrypted-media",
             )
+            display(user_frame)
 
             if track_info['id'] in hot_songs_df.id.to_list():
                 randhot = recommend_hot_song(hot_songs_df, track_info['id'])
@@ -178,6 +179,7 @@ def run_recommender():
                         allowtransparency="true",
                         allow="encrypted-media",
                         )
+                display(rec_frame)
             else:
                 # recommend something similar
                 ## is this track already in our database?
@@ -209,10 +211,10 @@ def run_recommender():
                         allowtransparency="true",
                         allow="encrypted-media",
                         )
-    return user_frame, rec_frame
+                display(rec_frame)
+    return
 
 ## ------ initialize the app ------
-#def prepare_system():
 hot_songs_df = load_hot_songs()
 gen_songs_df = load_big_db()
 
@@ -222,8 +224,6 @@ cluster_members = {}
 for cluster in clusters:
     cluster_members[cluster] = np.where(gen_songs_df[LABELS_COLNAME] == cluster)
 
-## get models
+## load the fitted models
 fitted_scaler = load("Model/big-scaler.pickle")
 fitted_kmeans = load("Model/big_kmeans_9.pickle")
-
-#    return hot_songs_df, gen_songs_df, cluster_members, fitted_scaler, fitted_kmeans
